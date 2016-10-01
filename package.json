@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "mocha --require test/helpers/setup.js",
+    "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .jsx npm test",
     "lint": "standard",
     "build": "webpack",
     "watch": "webpack --watch"
@@ -43,7 +44,7 @@
     "jsdom": "^8.0.4",
     "json-loader": "^0.5.4",
     "mocha": "^2.4.5",
-    "nyc": "^6.0.0",
+    "nyc": "^8.0.0",
     "react-addons-test-utils": "^0.14.7",
     "sinon": "^1.17.3",
     "webpack": "^1.12.13"
