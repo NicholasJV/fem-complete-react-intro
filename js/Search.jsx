@@ -5,7 +5,7 @@ const ShowCard = require('./ShowCard')
 const Search = React.createClass({
   getInitialState () {
     return {
-      searchTerm: 'search'
+      searchTerm: ''
     }
   },
   handleSearchTermEvent (event) {
@@ -22,8 +22,11 @@ const Search = React.createClass({
           {data.shows
             .filter((show) => `${show.title} ${show.description}`.toUpperCase()
             .indexOf(this.state.searchTerm.toUpperCase()) >= 0)
-            .map((s) => (
-              <ShowCard show={s} key={s.imdbID} />
+            .map((show) => (
+              <ShowCard {...show} key={show.imdbID} />
+              // {...show} takes properties from the show passed in and assigns them all as element attributes
+              // ex. show.description becomes description={show.description} on ShowCard
+              // but it does all the properties automatically! nice ES6 'syntactic sugar'
           ))}
         </div>
       </div>
