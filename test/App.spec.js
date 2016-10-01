@@ -1,4 +1,47 @@
 /* eslint-env mocha */
+// only for linting, tells eslint that this is a mocha test file,
+// so it
+
+const React = require('react')
+const chai = require('chai')
+const { expect } = chai
+const Search = require('../js/Search')
+const ShowCard = require('../js/ShowCard')
+const enzyme = require('enzyme')
+const { shallow, mount } = enzyme
+const { shows } = require('../public/data')
+
+describe('<Search />', () => {
+  // ^Search tag above^ is just a label/identifier for the component,
+  // something descriptive as a note-to-dev-self
+  it('should render the brand', () => {
+    const wrapper = shallow(<Search />)
+    expect(wrapper.contains(<h1 className='brand'>nvanvideo</h1>)).to.be.true
+  })
+
+  it('should render as many shows as exist in data', () => {
+    const wrapper = shallow(<Search />)
+    expect(wrapper.find(ShowCard).length).to.equal(shows.length)
+  })
+
+  it('should filter correctly given new state', () => {
+    const wrapper = mount(<Search />)
+    const input = wrapper.find('.search-input')
+    input.node.value = 'house'
+    input.simulate('change') // fires onChange event in React
+    expect(wrapper.state('searchTerm')).to.equal('house')
+    expect(wrapper.find('.show-card').length).to.equal(2)
+      // this is an indirect test, testing filter function
+
+  })
+
+  xit('should pass', () => {
+    expect(1 + 1 === 2).to.be.true
+  })
+})
+
+/*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+
 const React = require('react')
 const chai = require('chai')
 const { expect } = chai
@@ -47,3 +90,5 @@ describe('Store', () => {
     expect(state).to.deep.equal({searchTerm: 'correct string'})
   })
 })
+
+*/
