@@ -1,6 +1,8 @@
 const React = require('react')
-const data = require('../public/data')
 const ShowCard = require('./ShowCard')
+// const { shows } = require('../public/data')
+const { Link } = require('react-router')
+const { object } = React.PropTypes
 
 const Search = React.createClass({
   getInitialState () {
@@ -8,8 +10,8 @@ const Search = React.createClass({
       searchTerm: ''
     }
   },
-  randomFunction () { // only here to show a piece of code not covered by tests
-    console.log('lol')
+  propTypes: {
+    route: object
   },
   handleSearchTermEvent (event) {
     this.setState({ searchTerm: event.target.value })
@@ -18,11 +20,11 @@ const Search = React.createClass({
     return (
       <div className='container'>
         <header className='header'>
-          <h1 className='brand'>nvanvideo</h1>
+          <h1 className='brand'><Link to='/'>nvanvideo</Link></h1>
           <input value={this.state.searchTerm} className='search-input' type='text' placeholder='Search' onChange={this.handleSearchTermEvent} />
         </header>
         <div className='shows'>
-          {data.shows
+          {this.props.route.shows
             .filter((show) => `${show.title} ${show.description}`.toUpperCase()
             .indexOf(this.state.searchTerm.toUpperCase()) >= 0)
             .map((show) => (
