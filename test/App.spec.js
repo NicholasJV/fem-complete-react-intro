@@ -10,8 +10,9 @@ const ShowCard = require('../js/ShowCard')
 const enzyme = require('enzyme')
 const { shallow, mount } = enzyme
 const { shows } = require('../public/data')
+const { store, rootReducer } = require('../js/Store')
 
-describe('<Search />', () => {
+xdescribe('<Search />', () => {
   // ^Search tag above^ is just a label/identifier for the component,
   // something descriptive as a note-to-dev-self
   it('should render the brand', () => {
@@ -37,6 +38,21 @@ describe('<Search />', () => {
 
   xit('should pass', () => {
     expect(1 + 1 === 2).to.be.true
+  })
+})
+
+// Testing Redux is easier and more effective than
+describe('Store', () => {
+  it('should bootstrap', () => {
+    const state = rootReducer(undefined, {type: '@@redux/INIT'})
+    expect(state).to.deep.equal({ searchTerm: '' })
+  })
+  it('should handle setSearchTerm actions', () => {
+    const state = rootReducer(
+      {searchTerm: 'some random string'},
+      {type: 'setSearchTerm', value: 'correct string'}
+    )
+    expect(state).to.deep.equal({ searchTerm: 'correct string' })
   })
 })
 

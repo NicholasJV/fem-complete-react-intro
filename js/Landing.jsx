@@ -1,12 +1,47 @@
 const React = require('react')
-const { Link } = require('react-router')
+const { Link, hashHistory } = require('react-router')
+const { connector } = require('./Store')
+const { func, string } = React.PropTypes
 
-const Landing = () => (
-  <div className='home-info'>
-    <h1 className='title'>nvanvideo</h1>
-    <input className='search' type='text' placeholder='Search' />
-    <Link to='/search' className='browse-all'> or Browse All </Link>
-  </div>
-)
+class Landing extends React.Component {
+// this constructor would be automagically taken care of with React.createClass
+  constructor (props) {
+    super(props) // pass props up to the component
+    // must do this binding to the component for each function
+    this.handleSearchTermEvent = this.handleSearchTermEvent.bind(this)
+    this.gotoSearch = this.gotoSearch.bind(this)
+  }
+  handleSearchTermEvent (event) {
+    this.props.setSearchTerm(event.target.value)
+  }
+  gotoSearch (event) {
+    hashHistory.push('search')
+    // ^HH above^ effectively says 'redirect me to the search page'
+    // and puts it into react-routers internal history
+    event.preventDefault()
+  }
+  render () {
+    return (
+      <div className='home-info'>
+        <h1 className='title'>nvanvideo</h1>
+        <form onSubmit={this.gotoSearch}>
+          <input
+            value={this.props.searchTerm}
+            onChange={this.handleSearchTermEvent}
+            className='search'
+            type='text' placeholder='Search'
+          />
+          <button className='browse-all'> Submit </button>
+        </form>
+        <Link to='/search' className='browse-all'> or Browse All </Link>
+      </div>
+    )
+  }
+}
 
-module.exports = Landing
+Landing.propTypes = {
+  searchTerm: string,
+  setSearchTerm: func
+}
+
+module.exports = connector(Landing)
