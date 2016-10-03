@@ -1,33 +1,29 @@
 const React = require('react')
 const ShowCard = require('./ShowCard')
-// const { Link } = require('react-router')
-const { object } = React.PropTypes
 const Header = require('./Header')
+const { object, string } = React.PropTypes
+const { connector } = require('./Store')
 
 const Search = React.createClass({
-  getInitialState () {
-    return {
-      searchTerm: ''
-    }
-  },
+// For reference, these were the pre-Redux state handling functions:
+  // getInitialState () { return { searchTerm: '' } },
+  // handleSearchTermChange (searchTerm) { this.setState({ searchTerm: searchTerm })},
+  // =-=-= These props would go in Header:
+    // handleSearchTermChange={this.handleSearchTermChange}
+    // searchTerm={this.state.searchTerm}
+  // in filter function, searchTerm moved from this.state to this.props
   propTypes: {
-    route: object
-  },
-  handleSearchTermChange (searchTerm) {
-    this.setState({ searchTerm: searchTerm })
+    route: object,
+    searchTerm: string // comes from Redux, ya heard?
   },
   render () {
     return (
       <div className='container'>
-        <Header
-          handleSearchTermChange={this.handleSearchTermChange}
-          searchTerm={this.state.searchTerm}
-          showSearch // defaults to true
-        />
+        <Header showSearch /* defaults to true */ />
         <div className='shows'>
           {this.props.route.shows
             .filter((show) => `${show.title} ${show.description}`.toUpperCase()
-            .indexOf(this.state.searchTerm.toUpperCase()) >= 0)
+            .indexOf(this.props.searchTerm.toUpperCase()) >= 0)
             .map((show) => (
               <ShowCard {...show} key={show.imdbID} />
               // {...show} takes properties from the show passed in and assigns them all as element attributes
@@ -40,4 +36,4 @@ const Search = React.createClass({
   }
 })
 
-module.exports = Search
+module.exports = connector(Search)
