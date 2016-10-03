@@ -13,7 +13,7 @@ const Header = React.createClass({
     this.props.setSearchTerm(e.target.value)
   },
   render () {
-    console.log(this.props.searchTerm) // this tests the store connection
+    // console.log(this.props.searchTerm) // this tests the store connection
     let utilSpace // initializing it would add a little extra unnecessary
     if (this.props.showSearch) {
       utilSpace = (

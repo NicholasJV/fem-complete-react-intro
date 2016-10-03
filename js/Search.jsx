@@ -5,16 +5,9 @@ const { object, string } = React.PropTypes
 const { connector } = require('./Store')
 
 const Search = React.createClass({
-// For reference, these were the pre-Redux state handling functions:
-  // getInitialState () { return { searchTerm: '' } },
-  // handleSearchTermChange (searchTerm) { this.setState({ searchTerm: searchTerm })},
-  // =-=-= These props would go in Header:
-    // handleSearchTermChange={this.handleSearchTermChange}
-    // searchTerm={this.state.searchTerm}
-  // in filter function, searchTerm moved from this.state to this.props
   propTypes: {
     route: object,
-    searchTerm: string // comes from Redux, ya heard?
+    searchTerm: string // comes from Redux now, ya heard?
   },
   render () {
     return (
@@ -26,9 +19,7 @@ const Search = React.createClass({
             .indexOf(this.props.searchTerm.toUpperCase()) >= 0)
             .map((show) => (
               <ShowCard {...show} key={show.imdbID} />
-              // {...show} takes properties from the show passed in and assigns them all as element attributes
-              // ex. show.description becomes description={show.description} on ShowCard
-              // but it does all the properties automatically! nice ES6 'syntactic sugar'
+              // {...show} spread operator (see ES6 for explanation)
           ))}
         </div>
       </div>
@@ -37,3 +28,23 @@ const Search = React.createClass({
 })
 
 module.exports = connector(Search)
+
+/* *********************************************************************
+For reference, these were the pre-Redux state handling functions:
+
+  getInitialState () { return { searchTerm: '' } },
+  handleSearchTermChange (searchTerm) { this.setState({ searchTerm: searchTerm })},
+
+  =-=-= These props would go in Header:
+    handleSearchTermChange={this.handleSearchTermChange}
+    searchTerm={this.state.searchTerm}
+
+  in filter function, searchTerm moved from this.state to this.props
+
+  render () {
+    return (
+
+    }
+  )
+
+*/
