@@ -1,4 +1,5 @@
 const React = require('react')
+const Header = require('./Header')
 
 class Details extends React.Component {
   render () {
@@ -7,9 +8,7 @@ class Details extends React.Component {
 
     return (
       <div style={{/* textAlign: 'left' */}} className='container'>
-        <header className='header'>
-          <h1 className='brand'>nvanvideo</h1>
-        </header>
+        <Header />
         <div className='video-info'>
           <h1 className='video-title'>{title}</h1>
           <h2 className='video-year'>({year})</h2>
