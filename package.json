@@ -2,9 +2,9 @@
   "name": "complete-intro-to-react",
   "version": "1.0.0",
   "description": "A two day workshop on a complete intro to React",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "test": "mocha --require test/helpers/setup.js",
     "cover": "nyc --reporter=lcov --reporter=text --reporter=html --require babel-register --extension .jsx npm test",
     "lint": "standard",

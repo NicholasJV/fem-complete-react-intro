@@ -1,10 +1,12 @@
 const redux = require('redux')
 const reactRedux = require('react-redux')
+const { shows } = require('../public/data')
 
 const SET_SEARCH_TERM = 'setSearchTerm'
 
 const initialState = {
-  searchTerm: ''
+  searchTerm: '',
+  shows
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -29,9 +31,14 @@ const store = redux.createStore(rootReducer, initialState, redux.compose(
     ? window.devToolsExtension() : (f) => f
 ))
 
-const mapStateToProps = (state) => ({
-  searchTerm: state.searchTerm // implicit return
-})
+const mapStateToProps = (state) => {
+  // These props get put on whatever component we call connector() on
+  return {
+  // would spread operator work? {...state} ?
+    searchTerm: state.searchTerm,
+    shows: state.shows
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {

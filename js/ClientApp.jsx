@@ -1,39 +1,36 @@
 const React = require('react')
-const ReactDOM = require('react-dom')
+// const ReactDOM = require('react-dom')
 const Landing = require('./Landing')
 const Search = require('./Search')
 const Layout = require('./Layout')
 const Details = require('./Details')
-
-const { Router, Route, IndexRoute, hashHistory: hh } = require('react-router')
-const { shows } = require('../public/data')
+/* hashHistory: hh, */
+const { Router, Route, IndexRoute, browserHistory } = require('react-router')
 const { store } = require('./Store')
 const { Provider } = require('react-redux')
 
+const myRoutes = () => (
+  <Route path='/' component={Layout}>
+    <IndexRoute component={Landing} />
+    <Route path='/search' component={Search} />
+    <Route path='/details/:id' component={Details} />
+  </Route>
+)
+
 const App = React.createClass({
-  assignShow (nextState, replace) {
-    const showArray = shows.filter((show) => show.imdbID === nextState.params.id)
-    if (showArray.length < 1) {
-      // sort like redirect, replace method sends them back to home if there is no show
-      return replace('/')
-    }
-    Object.assign(nextState.params, showArray[0])
-    return nextState
-  },
   render () {
     return (
       <Provider store={store}>
-        <Router history={hh}>
-          <Route path='/' component={Layout}>
-            <IndexRoute component={Landing} />
-            <Route path='/search' component={Search} shows={shows} />
-            <Route path='/details/:id' component={Details} onEnter={this.assignShow} />
-            {/*  onEnter prop runs the specified function anytime it enters the route */}
-          </Route>
+        <Router history={browserHistory}>
+          {myRoutes()}
         </Router>
       </Provider>
     )
   }
 })
 
-ReactDOM.render(<App />, document.getElementById('app'))
+// ReactDOM.render(<App />, document.getElementById('app'))
+
+App.Routes = myRoutes
+
+module.exports = App

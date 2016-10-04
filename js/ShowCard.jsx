@@ -10,7 +10,6 @@ const ShowCard = (props) => (
         <h3 className='show-card-title'>{props.title}</h3>
         <h3 className='show-card-year'>{props.year}</h3>
         <p className='show-card-description'>{props.description}</p>
-        <p>ID: {props.key}</p>
       </div>
     </div>
   </Link>
@@ -23,7 +22,6 @@ ShowCard.propTypes = {
   title: string.isRequired,
   year: string.isRequired,
   description: string.isRequired,
-  key: string.isRequired,
   imdbID: string.isRequired
 }
 

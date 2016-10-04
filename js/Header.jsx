@@ -27,7 +27,7 @@ const Header = React.createClass({
       utilSpace = (
         <h2 className='header-back'>
           <Link to='/search'>
-            Back
+            Back to Search
           </Link>
         </h2>
       )
